@@ -1,7 +1,14 @@
-import { useState, createContext, useReducer, SetStateAction, Dispatch, useEffect, useMemo } from "react";
-import { initialTodoState, todoReducer, TodoState } from "./todoReducer";
-import { Message, useAssistant } from "ai/react";
-
+import {
+    useState,
+    createContext,
+    useReducer,
+    SetStateAction,
+    Dispatch,
+    useEffect,
+    useMemo,
+} from 'react';
+import { initialTodoState, todoReducer, TodoState } from './todoReducer';
+import { Message, useAssistant } from 'ai/react';
 
 interface TodoAppStateType {
     messages: Message[];
@@ -9,7 +16,7 @@ interface TodoAppStateType {
     submitMessage: () => void;
     panelOpen: boolean;
     setPanelOpen: Dispatch<SetStateAction<boolean>>;
-    todoState: TodoState,
+    todoState: TodoState;
     error?: any;
     input?: string;
     status?: string;
@@ -35,36 +42,40 @@ interface TodoProviderProps {
     children: React.ReactNode;
 }
 
-
 export const TodoProvider = ({ children }: TodoProviderProps) => {
-const [todoState, dispatch] = useReducer(todoReducer, initialTodoState);
- const { messages, ...assistantHelpers } = useAssistant({ api: '/api/assistant', body: { state: todoState } });
- console.log('messages', messages)
-  const [panelOpen, setPanelOpen] = useState(true);
-  const [seenMessages, setSeenMessages] = useState(new Set());
+    const [todoState, dispatch] = useReducer(todoReducer, initialTodoState);
+    const { messages, ...assistantHelpers } = useAssistant({
+        api: '/api/assistant',
+        body: { state: todoState },
+    });
+    console.log('messages', messages);
+    const [panelOpen, setPanelOpen] = useState(true);
+    const [seenMessages, setSeenMessages] = useState(new Set());
 
-  const lastDataMessage = useMemo(() => messages.filter(m => m.role === 'data').slice(-1)[0], [messages]);
-  useEffect(() => {
-    if (lastDataMessage && lastDataMessage.role === 'data' && !seenMessages.has(lastDataMessage.id)) {
-        const { function: func } = lastDataMessage.data as any;
-        const action = { type: func.name, payload: JSON.parse(func.arguments) };
-        dispatch(action);
-        setSeenMessages(prev => new Set(prev).add(lastDataMessage.id));
-    }
-}, [lastDataMessage, seenMessages]);
-  
+    const lastDataMessage = useMemo(
+        () => messages.filter(m => m.role === 'data').slice(-1)[0],
+        [messages],
+    );
+    useEffect(() => {
+        if (
+            lastDataMessage &&
+            lastDataMessage.role === 'data' &&
+            !seenMessages.has(lastDataMessage.id)
+        ) {
+            const { function: func } = lastDataMessage.data as any;
+            const action = { type: func.name, payload: JSON.parse(func.arguments) };
+            dispatch(action);
+            setSeenMessages(prev => new Set(prev).add(lastDataMessage.id));
+        }
+    }, [lastDataMessage, seenMessages]);
 
-  const mergedState: TodoAppStateType = {
-    messages,
-    ...assistantHelpers,
-    panelOpen,
-    setPanelOpen,
-    todoState,
-  };
+    const mergedState: TodoAppStateType = {
+        messages,
+        ...assistantHelpers,
+        panelOpen,
+        setPanelOpen,
+        todoState,
+    };
 
-  return (
-    <TodoContext.Provider value={mergedState}>
-      {children}
-    </TodoContext.Provider>
-  );
+    return <TodoContext.Provider value={mergedState}>{children}</TodoContext.Provider>;
 };
