@@ -26,7 +26,6 @@ export default function Chat() {
 
     const filteredMessages = messages.filter((m: Message) => m.role !== 'data');
 
-    // When status changes to accepting messages, focus the input:
     const inputRef = useRef<HTMLInputElement>(null);
     useEffect(() => {
         if (status === 'awaiting_message') {
@@ -70,24 +69,27 @@ export default function Chat() {
                 {status === 'in_progress' && (
                     <div className="w-full h-8 max-w-md p-2 mb-8 bg-gray-300 rounded-lg dark:bg-gray-600 animate-pulse" />
                 )}
+                {panelOpen && (
+                    <div>
+                        <form onSubmit={submitMessage}>
+                            <input
+                                ref={inputRef}
+                                disabled={status !== 'awaiting_message'}
+                                className="fixed w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl bottom-14 ax-w-md"
+                                value={input}
+                                placeholder="What is the temperature in the living room?"
+                                onChange={handleInputChange}
+                            />
+                        </form>
 
-                <form onSubmit={submitMessage}>
-                    <input
-                        ref={inputRef}
-                        disabled={status !== 'awaiting_message'}
-                        className="fixed w-full max-w-md p-2 mb-8 border border-gray-300 rounded shadow-xl bottom-14 ax-w-md"
-                        value={input}
-                        placeholder="What is the temperature in the living room?"
-                        onChange={handleInputChange}
-                    />
-                </form>
-
-                <button
-                    className="fixed bottom-0 w-full max-w-md p-2 mb-8 text-white bg-red-500 rounded-lg"
-                    onClick={stop}
-                >
-                    Stop
-                </button>
+                        <button
+                            className="fixed bottom-0 w-full max-w-md p-2 mb-8 text-white bg-red-500 rounded-lg"
+                            onClick={stop}
+                        >
+                            Stop
+                        </button>
+                    </div>
+                )}
             </div>
             <button
                 onClick={() => setPanelOpen(!panelOpen)}
