@@ -8,10 +8,10 @@ This project is a prototype that explores how a large language model (LLM) can i
 
 This project attempts to address several issues with both traditional and chat interfaces:
 
-* **Text-Heavy Chat Experiences**: Purely chat-based interfaces often become too dense with only text, overwhelming users. Traditional UI interfaces with rich components and interactivity are still valuable and should not be discarded.
-* **Feature Discoverability**: Traditional applications often face challenges such as complex information architecture and poor first time user experience, leading app designers to fall back to clunky tours to explain the app. LLMs can help mitigate these issues by enhancing user guidance and navigation.
-* **Collaborative Interaction with AI**: LLMs can fall short by hallucinating inaccurate data, or by providing responses that are bland and cliché, lacking a creative and fresh point of view. As a result, many users prefer to collaborate with AI rather than outsource all decision-making. This prototype aims to show how this collaboration could work, allowing users to leverage AI assistance in an app while maintaining full control and visibility.
-* **Integration of LLMs and UI Actions**: This prototype leverages the action-reducer state machine paradigm that has been common in web application development, and makes the same actions available to the LLM as functions (tools) on the backend.
+* **Text-Heavy Chat Experiences**: Purely chat-based interfaces often become too dense with text, overwhelming users. Traditional UI interfaces with rich components and interactivity remain valuable and should not be discarded.
+* **Feature Discoverability**: Traditional applications often struggle with complex information architecture and poor first-time user experiences. This leads app designers to rely on clunky tours to explain the app. LLMs can help mitigate these issues by enhancing user guidance and navigation..
+* **Collaborative Interaction with AI**: LLMs can hallucinate inaccurate data or provide clichéd, generic responses. As a result, many users prefer to collaborate with AI rather than outsource all decision-making. This prototype aims to demonstrate how this collaboration could work, allowing users to leverage AI assistance in an app while maintaining full control and visibility.
+* **Integration of LLMs and UI Actions**: This prototype leverages the action-reducer pattern, a form of state machine common in web application development, and makes the same actions available to the LLM as functions (tools) on the backend.
 
 ### Demo
 
