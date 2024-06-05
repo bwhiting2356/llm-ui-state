@@ -3,19 +3,13 @@
 import * as React from 'react';
 
 import { Button } from '@/components/ui/button';
-import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandItem,
-    CommandList,
-} from '@/components/ui/command';
+import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { TodoContext } from '../state/context';
 import { useContext, useState } from 'react';
 
 type Option = {
-    value: string;
+    value: 'status' | 'assigned';
     label: string;
 };
 
@@ -40,8 +34,8 @@ export function GroupByPicker() {
         dispatch,
     } = useContext(TodoContext);
 
-    const setGroupBy = (option: Option | null) => {
-        dispatch({ type: 'set_group_by', payload: { groupBy: option?.value } });
+    const setGroupBy = (option: Option) => {
+        dispatch({ type: 'set_group_by', payload: { groupBy: option.value } });
     };
 
     return (
@@ -63,8 +57,9 @@ export function GroupByPicker() {
                                         value={option.value}
                                         onSelect={value => {
                                             setGroupBy(
-                                                groupByOptions.find(opt => opt.value === value) ||
-                                                    null,
+                                                groupByOptions.find(
+                                                    opt => opt.value === value,
+                                                ) as Option,
                                             );
                                             setOpen(false);
                                         }}

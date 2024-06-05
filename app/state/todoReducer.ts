@@ -1,4 +1,4 @@
-import { Dispatch, Reducer } from 'react';
+import { Reducer } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 export enum TodoStatus {
@@ -10,11 +10,18 @@ export enum TodoStatus {
     DONE = 'done',
 }
 
-export interface Todo {
+export class Todo {
     id: string;
     text: string;
     status: TodoStatus;
     assigned: string;
+
+    constructor() {
+        this.id = uuidv4();
+        this.text = '';
+        this.status = TodoStatus.BACKLOG;
+        this.assigned = '';
+    }
 }
 
 export type Action =
@@ -23,7 +30,6 @@ export type Action =
     | { type: 'batch_edit_todos'; payload: { todos: { id: string; todo: Partial<Todo> }[] } }
     | { type: 'batch_delete_todos'; payload: { ids: string[] } }
     | { type: 'set_group_by'; payload: { groupBy: 'status' | 'assigned' } };
-
 
 export interface TodoState {
     todos: Todo[];

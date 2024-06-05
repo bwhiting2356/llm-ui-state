@@ -3,7 +3,7 @@ import { TodoContext } from '../state/context';
 import { Message } from 'ai/react';
 import { Input } from '@/components/ui/input';
 import MessageComponent from './MessageComponent';
-import { X, Chat as ChatIcon } from '@phosphor-icons/react';
+import { X, Chat as ChatIcon, StopCircle, ArrowCircleUp } from '@phosphor-icons/react';
 
 const suggestions = [
     "Reassign all of Bob's tasks to Alice",
@@ -119,10 +119,10 @@ export default function Chat() {
                         />
                         <button
                             type="submit"
-                            className={`p-2 ${status === 'in_progress' ? 'bg-red-500' : 'bg-blue-500'} rounded text-white`}
+                            className={`p-2 rounded text-white bg-gray-700`}
                             onClick={status === 'in_progress' ? stop : undefined}
                         >
-                            {status === 'in_progress' ? '■' : '→'}
+                            {status === 'in_progress' ? <StopCircle size={20} />: <ArrowCircleUp  size={20}/>}
                         </button>
                     </form>
                 </div>
