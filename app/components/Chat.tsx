@@ -8,7 +8,7 @@ import { X, Chat as ChatIcon } from '@phosphor-icons/react';
 const suggestions = [
     "Reassign all of Bob's tasks to Alice",
     'How many tasks are in progress?',
-    'Change the view to group by assigned',
+    'Change the view to group tasks by status',
     'Add a new task for Dana to do E2E QA testing',
 ];
 
@@ -75,7 +75,7 @@ export default function Chat() {
         >
             {panelOpen && (
                 <div className="flex flex-col w-full mx-auto flex-grow px-2">
-                    <div className="mt-6">
+                    <div className="my-4">
                         <h2 className="font-bold text-xl">AI Copilot</h2>
                     </div>
                     {error != null && (
@@ -94,9 +94,9 @@ export default function Chat() {
             )}
             {panelOpen && (
                 <div className="w-full sticky bottom-0 p-2 border-t border-gray-300 bg-white">
-                    <div className="grid grid-cols-2 gap-2 mb-4">
-                        {showSuggestions &&
-                            suggestions.map(s => (
+                    {showSuggestions && suggestions.length > 0 && (
+                        <div className="grid grid-cols-2 gap-2 mb-4">
+                            {suggestions.map(s => (
                                 <div
                                     key={s}
                                     className="p-2 bg-gray-100 rounded shadow cursor-pointer hover:bg-gray-200"
@@ -107,8 +107,9 @@ export default function Chat() {
                                     {s}
                                 </div>
                             ))}
-                    </div>
-                    <form onSubmit={submitMessage} className="flex w-full items-center space-x-2 ">
+                        </div>
+                    )}
+                    <form onSubmit={submitMessage} className="flex w-full items-center space-x-2">
                         <Input
                             ref={inputRef}
                             disabled={status !== 'awaiting_message'}

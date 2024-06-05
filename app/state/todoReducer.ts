@@ -152,7 +152,7 @@ export const mockInitialTodoState: TodoState = {
         },
     ],
     tab: 'board',
-    groupBy: 'status',
+    groupBy: 'assigned',
 };
 
 export function todoReducer(state: TodoState, action: Action) {
