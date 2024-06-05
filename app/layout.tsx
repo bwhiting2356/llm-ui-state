@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
     title: 'LLM UI State Management',
-    description: 'Proof of concept for management UI application state with an LLM',
+    description: 'Proof of concept for managing UI application state with an LLM',
 };
 
 export default function RootLayout({
