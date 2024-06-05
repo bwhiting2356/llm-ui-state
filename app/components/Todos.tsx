@@ -1,10 +1,9 @@
 import React, { useContext } from 'react';
 import { TodoContext } from '../state/context';
 import { Todo } from '../state/todoReducer';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
-import { StatusBadge } from '@/components/ui/status-badge';
-import { Badge } from '@/components/ui/badge';
 import { GroupByPicker } from './GroupByPicker';
+import { capitalizeWords } from '@/lib/utils';
+import { TodoCard } from './TodoCard';
 
 function groupTodos(todos: Todo[], groupBy: 'status' | 'assigned') {
     return todos.reduce(
@@ -20,9 +19,6 @@ function groupTodos(todos: Todo[], groupBy: 'status' | 'assigned') {
     );
 }
 
-const capitalizeWords = (str: string) => {
-    return str.replace(/\b\w/g, char => char.toUpperCase());
-};
 
 export default function Todos() {
     const { todoState, panelOpen } = useContext(TodoContext);
@@ -32,7 +28,7 @@ export default function Todos() {
         <div key={key} className="flex-1">
             <h2 className="text-normal font-semibold mb-4">{capitalizeWords(key)}</h2>
             <div className="space-y-4">
-                {todos.map(todo => (
+                {/* {todos.map(todo => (
                     <Card key={todo.id} className="border p-2">
                         <CardTitle className="text-sm mb-2 font-normal">{todo.text}</CardTitle>
                         <CardContent className="p-0">
@@ -46,7 +42,13 @@ export default function Todos() {
                             )}
                         </CardContent>
                     </Card>
-                ))}
+                ))} */}
+                {todos.map(todo => (
+                <TodoCard 
+                    key={todo.id} 
+                    todo={todo} 
+                />
+            ))}
             </div>
         </div>
     );

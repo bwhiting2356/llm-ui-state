@@ -7,7 +7,7 @@ import {
     useEffect,
     useMemo,
 } from 'react';
-import { mockInitialTodoState, todoReducer, TodoState } from './todoReducer';
+import { Action, mockInitialTodoState, todoReducer, TodoState } from './todoReducer';
 import { Message, useAssistant } from 'ai/react';
 
 interface TodoAppStateType {
@@ -17,7 +17,7 @@ interface TodoAppStateType {
     panelOpen: boolean;
     setPanelOpen: Dispatch<SetStateAction<boolean>>;
     todoState: TodoState;
-    dispatch: Dispatch<any>;
+    dispatch: Dispatch<Action>;
     error?: any;
     input?: string;
     status?: string;

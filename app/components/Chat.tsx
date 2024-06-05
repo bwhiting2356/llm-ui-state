@@ -39,7 +39,6 @@ export default function Chat() {
 
     const showSkeleton = useMemo(() => {
         const lastMessage = filteredMessages[filteredMessages.length - 1];
-        console.log('lastMessage', lastMessage);
         return lastMessage?.role !== 'assistant' && status !== 'awaiting_message';
     }, [status]);
 

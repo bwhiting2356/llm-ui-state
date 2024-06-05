@@ -1,3 +1,4 @@
+import { Dispatch, Reducer } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 export enum TodoStatus {
@@ -16,12 +17,13 @@ export interface Todo {
     assigned: string;
 }
 
-type Action =
+export type Action =
     | { type: 'change_tab'; payload: { tab: 'board' | 'summary' } }
     | { type: 'batch_add_todos'; payload: { todos: Todo[] } }
     | { type: 'batch_edit_todos'; payload: { todos: { id: string; todo: Partial<Todo> }[] } }
     | { type: 'batch_delete_todos'; payload: { ids: string[] } }
     | { type: 'set_group_by'; payload: { groupBy: 'status' | 'assigned' } };
+
 
 export interface TodoState {
     todos: Todo[];
@@ -155,7 +157,7 @@ export const mockInitialTodoState: TodoState = {
     groupBy: 'assigned',
 };
 
-export function todoReducer(state: TodoState, action: Action) {
+export const todoReducer: Reducer<TodoState, Action> = (state, action) => {
     const { type, payload } = action;
     switch (type) {
         case 'change_tab':
@@ -189,4 +191,4 @@ export function todoReducer(state: TodoState, action: Action) {
         default:
             return state;
     }
-}
+};
