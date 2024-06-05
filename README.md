@@ -23,6 +23,7 @@ This project addresses several key issues:
 This prototype is a typical todo app. It uses `useReducer` to manage application state and has actions that can be dispatched. These actions are also provided to the OpenAI assistant.
 
 Demo:
+
 ![ezgif-4-1f8e1925fc](https://github.com/bwhiting2356/llm-ui-state/assets/16016903/0b3fdc9e-a4d4-445f-9141-abc547afd7f0)
 
 Front-end code:
