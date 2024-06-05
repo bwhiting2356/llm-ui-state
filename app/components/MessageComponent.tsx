@@ -1,7 +1,7 @@
 import { Message } from 'ai';
 import React from 'react';
-import Markdown from 'react-markdown'
-import { Robot } from "@phosphor-icons/react";
+import Markdown from 'react-markdown';
+import { Robot } from '@phosphor-icons/react';
 
 interface MessageComponentProps {
     message?: Message;
@@ -16,13 +16,15 @@ const MessageComponent: React.FC<MessageComponentProps> = ({ message }) => {
                 backgroundColor: message?.role === 'assistant' ? 'transparent' : undefined,
             }}
         >
-            <div className="flex space-x-1 items-start"> {/* Add flex-wrap */}
+            <div className="flex space-x-1 items-start">
+                {' '}
+                {/* Add flex-wrap */}
                 {message?.role !== 'user' && (
                     <div className="mt-0.5">
                         <Robot size={14} />
                     </div>
                 )}
-                <div className="markdown" style={{ flex: 1 }}> 
+                <div className="markdown" style={{ flex: 1 }}>
                     {message?.content ? <Markdown>{message.content}</Markdown> : 'Thinking...'}
                 </div>
             </div>

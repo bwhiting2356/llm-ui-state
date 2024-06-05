@@ -3,15 +3,7 @@ import { TodoContext } from '../state/context';
 import { Message } from 'ai/react';
 import { Input } from '@/components/ui/input';
 import MessageComponent from './MessageComponent';
-
-const roleToColorMap: Record<Message['role'], string> = {
-    system: 'red',
-    user: 'black',
-    function: 'blue',
-    tool: 'purple',
-    assistant: 'green',
-    data: 'orange',
-};
+import { X, Chat as ChatIcon } from '@phosphor-icons/react';
 
 const suggestions = [
     "Reassign all of Bob's tasks to Alice",
@@ -32,7 +24,6 @@ export default function Chat() {
         status,
         stop,
     } = useContext(TodoContext);
-    console.log('status', status);
 
     const filteredMessages = messages.filter((m: Message) => m.role !== 'data');
     const inputRef = useRef<HTMLInputElement>(null);
@@ -80,10 +71,10 @@ export default function Chat() {
 
     return (
         <div
-            className={`flex flex-col overflow-y-scroll items-center justify-between max-h-screen text-sm ${panelOpen ? 'w-1/3' : 'w-16'} h-full border-r transition-width duration-300 relative`}
+            className={`flex flex-col overflow-y-scroll items-center justify-between max-h-screen text-sm ${panelOpen ? 'w-1/3' : 'w-12'} h-full border-r transition-width duration-300 relative`}
         >
             {panelOpen && (
-                <div className="flex flex-col w-full max-w-md mx-auto flex-grow px-2">
+                <div className="flex flex-col w-full mx-auto flex-grow px-2">
                     <div className="mt-6">
                         <h2 className="font-bold text-xl">AI Copilot</h2>
                     </div>
@@ -102,7 +93,7 @@ export default function Chat() {
                 </div>
             )}
             {panelOpen && (
-                <div className="w-full max-w-md sticky bottom-0 p-2 border-t border-gray-300 bg-white">
+                <div className="w-full sticky bottom-0 p-2 border-t border-gray-300 bg-white">
                     <div className="grid grid-cols-2 gap-2 mb-4">
                         {showSuggestions &&
                             suggestions.map(s => (
@@ -138,9 +129,9 @@ export default function Chat() {
             )}
             <button
                 onClick={() => setPanelOpen(!panelOpen)}
-                className="absolute top-4 right-4 p-2 bg-gray-700 text-white rounded-full shadow-md focus:outline-none"
+                className="absolute top-4 right-2 p-2 bg-gray-700 text-white rounded-full shadow-md focus:outline-none"
             >
-                {panelOpen ? '<' : '>'}
+                {panelOpen ? <X /> : <ChatIcon />}
             </button>
         </div>
     );

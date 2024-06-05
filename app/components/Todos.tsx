@@ -25,7 +25,7 @@ const capitalizeWords = (str: string) => {
 };
 
 export default function Todos() {
-    const { todoState } = useContext(TodoContext);
+    const { todoState, panelOpen } = useContext(TodoContext);
     const groupedTodos = groupTodos(todoState.todos, todoState.groupBy);
 
     const renderColumn = (key: string, todos: Todo[]) => (
@@ -52,7 +52,9 @@ export default function Todos() {
     );
 
     return (
-        <div className="flex flex-col h-screen overflow-scroll px-4 justify-start">
+        <div
+            className={`flex flex-col h-screen overflow-scroll px-4 justify-start transition-width duration-300 ${panelOpen ? 'w-2/3' : 'w-full'}`}
+        >
             <div className="flex space-x-12 items-center my-4">
                 <h2 className="font-bold text-xl">Todos</h2>
                 <GroupByPicker />
