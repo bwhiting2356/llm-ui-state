@@ -34,6 +34,7 @@ export const todoReducer: Reducer<TodoState, Action> = (state, action) => {
         ...
     }
 };
+```
 Back-end tool definition:
 ```
 {
