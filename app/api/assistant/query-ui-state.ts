@@ -20,7 +20,5 @@ export async function queryUIState({ query, state }: { query: string; state: str
         model: 'gpt-4o',
     });
 
-    const result = completion.choices[0].message.content || '';
-    console.log('result', result);
-    return result;
+    return completion.choices[0].message.content || '';
 }

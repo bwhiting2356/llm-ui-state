@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { PencilSimple, TrashSimple } from '@phosphor-icons/react';
+import { TrashSimple } from '@phosphor-icons/react';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { capitalizeWords } from '@/lib/utils';
@@ -14,12 +14,12 @@ interface TodoCardProps {
 
 export const TodoCard = ({ todo }: TodoCardProps) => {
     const { todoState, dispatch } = useContext(TodoContext);
+    const [isHovered, setIsHovered] = useState(false);
 
     const onDeleteTodo = () => {
         dispatch({ type: 'batch_delete_todos', payload: { ids: [todo.id] } });
     };
 
-    const [isHovered, setIsHovered] = useState(false);
 
     const onEditTodo = (newTodo: Todo) => {
         dispatch({

@@ -18,7 +18,6 @@ const MessageComponent: React.FC<MessageComponentProps> = ({ message }) => {
         >
             <div className="flex space-x-1 items-start">
                 {' '}
-                {/* Add flex-wrap */}
                 {message?.role !== 'user' && (
                     <div className="mt-0.5">
                         <Robot size={14} />
