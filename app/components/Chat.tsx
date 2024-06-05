@@ -114,7 +114,7 @@ export default function Chat() {
                             disabled={status !== 'awaiting_message'}
                             className="flex-grow p-2 border border-gray-300 rounded-l shadow-xl"
                             value={input}
-                            placeholder="What do you want to ask your AI Copilot"
+                            placeholder="What do you want to ask your AI Copilot?"
                             onChange={handleInputChange}
                         />
                         <button
