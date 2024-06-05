@@ -46,7 +46,7 @@ export default function Chat() {
             {panelOpen && (
                 <div className="flex flex-col w-full max-w-md mx-auto flex-grow px-2">
                     <div className="mt-6">
-                        <h2 className="font-bold text-xl">Chat</h2>
+                        <h2 className="font-bold text-xl">AI Copilot</h2>
                     </div>
                     {error != null && (
                         <div className="relative px-6 py-4 text-white bg-red-500 rounded-md">

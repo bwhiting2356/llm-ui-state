@@ -31,8 +31,7 @@ const groupByOptions: Option[] = [
 ];
 
 const getLabel = (value: string | null) => {
-    const option = groupByOptions.find(option => option.value === value);
-    return option ? option.label : '+ Set Group By';
+    return groupByOptions.find(option => option.value === value)?.label
 };
 
 export function GroupByPicker() {
