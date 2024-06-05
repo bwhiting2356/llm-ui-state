@@ -21,7 +21,7 @@ type Option = {
 
 const groupByOptions: Option[] = [
     {
-        value: 'state',
+        value: 'status',
         label: 'Status',
     },
     {
@@ -30,9 +30,8 @@ const groupByOptions: Option[] = [
     },
 ];
 
-const getLabel = (value: string | null) => {
-    return groupByOptions.find(option => option.value === value)?.label
-};
+const getLabel = (value: string | null) =>
+    groupByOptions.find(option => option.value === value)?.label;
 
 export function GroupByPicker() {
     const [open, setOpen] = useState(false);
@@ -57,7 +56,6 @@ export function GroupByPicker() {
                 <PopoverContent className="p-0" side="right" align="start">
                     <Command>
                         <CommandList>
-                            <CommandEmpty>No results found.</CommandEmpty>
                             <CommandGroup>
                                 {groupByOptions.map(option => (
                                     <CommandItem

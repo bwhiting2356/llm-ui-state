@@ -6,7 +6,7 @@ import { StatusBadge } from '@/components/ui/status-badge';
 import { Badge } from '@/components/ui/badge';
 import { GroupByPicker } from './GroupByPicker';
 
-function groupTodos(todos: Todo[], groupBy: 'state' | 'assigned') {
+function groupTodos(todos: Todo[], groupBy: 'status' | 'assigned') {
     return todos.reduce(
         (acc, todo) => {
             const key = todo[groupBy];
@@ -36,9 +36,9 @@ export default function Todos() {
                     <Card key={todo.id} className="border p-2">
                         <CardTitle className="text-sm mb-2 font-normal">{todo.text}</CardTitle>
                         <CardContent className="p-0">
-                            {todoState.groupBy !== 'state' && (
-                                <StatusBadge variant={todo.state}>
-                                    {capitalizeWords(todo.state)}
+                            {todoState.groupBy !== 'status' && (
+                                <StatusBadge variant={todo.status}>
+                                    {capitalizeWords(todo.status)}
                                 </StatusBadge>
                             )}
                             {todoState.groupBy !== 'assigned' && (
@@ -52,7 +52,7 @@ export default function Todos() {
     );
 
     return (
-        <div className="flex flex-col h-screen px-4 justify-start">
+        <div className="flex flex-col h-screen overflow-scroll px-4 justify-start">
             <div className="flex space-x-12 items-center my-4">
                 <h2 className="font-bold text-xl">Todos</h2>
                 <GroupByPicker />

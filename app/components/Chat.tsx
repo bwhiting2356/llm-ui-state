@@ -1,7 +1,8 @@
-import { useContext, useEffect, useRef } from 'react';
+import { ChangeEvent, useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { TodoContext } from '../state/context';
 import { Message } from 'ai/react';
 import { Input } from '@/components/ui/input';
+import MessageComponent from './MessageComponent';
 
 const roleToColorMap: Record<Message['role'], string> = {
     system: 'red',
@@ -11,6 +12,13 @@ const roleToColorMap: Record<Message['role'], string> = {
     assistant: 'green',
     data: 'orange',
 };
+
+const suggestions = [
+    "Reassign all of Bob's tasks to Alice",
+    'How many tasks are in progress?',
+    'Change the view to group by assigned',
+    'Add a new task for Dana to do E2E QA testing',
+];
 
 export default function Chat() {
     const {
@@ -24,10 +32,41 @@ export default function Chat() {
         status,
         stop,
     } = useContext(TodoContext);
+    console.log('status', status);
 
     const filteredMessages = messages.filter((m: Message) => m.role !== 'data');
     const inputRef = useRef<HTMLInputElement>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    const showSuggestions = useMemo(
+        () =>
+            status === 'awaiting_message' &&
+            !(input?.length && input.length > 0) &&
+            filteredMessages.length === 0,
+        [status, input, filteredMessages],
+    );
+
+    const showSkeleton = useMemo(() => {
+        const lastMessage = filteredMessages[filteredMessages.length - 1];
+        console.log('lastMessage', lastMessage);
+        return lastMessage?.role !== 'assistant' && status !== 'awaiting_message';
+    }, [status]);
+
+    const handleSuggestionClick = useCallback(
+        (suggestion: string) => {
+            if (inputRef.current) {
+                const event = {
+                    target: inputRef.current,
+                    currentTarget: inputRef.current,
+                } as ChangeEvent<HTMLInputElement>;
+
+                inputRef.current.value = suggestion;
+                handleInputChange(event);
+                inputRef.current.focus();
+            }
+        },
+        [handleInputChange, submitMessage],
+    );
 
     useEffect(() => {
         if (status === 'awaiting_message') {
@@ -55,44 +94,36 @@ export default function Chat() {
                             </span>
                         </div>
                     )}
-
                     {filteredMessages.map((m: Message) => (
-                        <div
-                            key={m.id}
-                            className={`whitespace-pre-wrap pb-2 ${m.role === 'user' ? 'text-right self-end' : 'text-left self-start'} ${m.role === 'user' ? 'bg-gray-200 rounded px-2 py-1' : ''}`}
-                            style={{
-                                color: roleToColorMap[m.role],
-                                maxWidth: '75%',
-                                backgroundColor: m.role === 'assistant' ? 'transparent' : undefined,
-                            }}
-                        >
-                            <div className="flex">
-                                {m.role === 'assistant' && (
-                                    <div role="img" aria-label="AI">
-                                        🤖
-                                    </div>
-                                )}
-                                <div className="markdown">
-                                    {m.content}
-                                </div>
-                            </div>
-                        </div>
+                        <MessageComponent key={m.id} message={m} />
                     ))}
+                    {showSkeleton && <MessageComponent />}
                     <div ref={messagesEndRef} />
-                    {status === 'in_progress' && (
-                        <div className="w-full h-8 max-w-md p-2 mb-8 bg-gray-300 rounded-lg dark:bg-gray-600 animate-pulse" />
-                    )}
                 </div>
             )}
             {panelOpen && (
                 <div className="w-full max-w-md sticky bottom-0 p-2 border-t border-gray-300 bg-white">
+                    <div className="grid grid-cols-2 gap-2 mb-4">
+                        {showSuggestions &&
+                            suggestions.map(s => (
+                                <div
+                                    key={s}
+                                    className="p-2 bg-gray-100 rounded shadow cursor-pointer hover:bg-gray-200"
+                                    onClick={() => {
+                                        handleSuggestionClick(s);
+                                    }}
+                                >
+                                    {s}
+                                </div>
+                            ))}
+                    </div>
                     <form onSubmit={submitMessage} className="flex w-full items-center space-x-2 ">
                         <Input
                             ref={inputRef}
                             disabled={status !== 'awaiting_message'}
                             className="flex-grow p-2 border border-gray-300 rounded-l shadow-xl"
                             value={input}
-                            placeholder="What is the temperature in the living room?"
+                            placeholder="What do you want to ask your AI Copilot"
                             onChange={handleInputChange}
                         />
                         <button
