@@ -90,7 +90,10 @@ Back-end tool definition:
 }
 ```
 
-### Current Implementation Issues
+### Current Issues
 
 * **Function Call Responses**: Currently, the API endpoint responds to the assistant with ‘success’ to all  UI-related function calls, which may not always be accurate. There is a possibility of hallucinated responses from the LLM that could lead to errors, and the llm would not know about those errors.
 * **Performance**: The system can be slow at times. This may improve in the future as LLM inference capabilities advance, potentially allowing for on-device processing.
+
+### Future Thinking
+The to-do app is a toy example where LLMs are probably not adding much value. But I can see it being much more helpful for a complex and intimiating application like AutoCAD, ProTools, or Adobe products.
