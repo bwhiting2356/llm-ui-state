@@ -6,7 +6,7 @@ import { TodoProvider } from './state/context';
 
 export default function Home() {
     return (
-        <main className="flex min-h-screen flex items-center justify-between">
+        <main className="flex h-screen flex items-center justify-between">
             <TodoProvider>
                 <Chat />
                 <Todos />

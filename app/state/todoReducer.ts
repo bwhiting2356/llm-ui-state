@@ -1,107 +1,190 @@
 import { v4 as uuidv4 } from 'uuid';
 
-interface Todo {
+export enum TodoStatus {
+    BACKLOG = 'backlog',
+    TO_DO = 'to do',
+    IN_PROGRESS = 'in progress',
+    IN_REVIEW = 'in review',
+    BLOCKED = 'blocked',
+    DONE = 'done',
+}
+
+export interface Todo {
     id: string;
     text: string;
-    state: 'done' | 'pending';
+    state: TodoStatus;
     assigned: string;
-    location: {
-        lat: number;
-        lng: number;
-    };
 }
 
 type Action =
-    | { type: 'add_todo'; payload: Todo }
-    | { type: 'edit_todo'; payload: { id: string; todo: Partial<Todo> } }
-    | { type: 'delete_todo'; payload: { id: string } }
-    | { type: 'change_tab'; payload: { tab: 'board' | 'summary' | 'map' } };
+    | { type: 'change_tab'; payload: { tab: 'board' | 'summary' } }
+    | { type: 'batch_add_todos'; payload: { todos: Todo[] } }
+    | { type: 'batch_edit_todos'; payload: { todos: { id: string; todo: Partial<Todo> }[] } }
+    | { type: 'batch_delete_todos'; payload: { ids: string[] } }
+    | { type: 'set_group_by'; payload: { groupBy: 'state' | 'assigned' } };
 
 export interface TodoState {
     todos: Todo[];
-    tab: 'board' | 'summary' | 'map';
+    tab: 'board' | 'summary';
+    groupBy: 'state' | 'assigned';
 }
 
-export const initialTodoState: TodoState = {
+export const mockInitialTodoState: TodoState = {
     todos: [
+        // Backlog
+        {
+            id: uuidv4(),
+            text: 'Research new frameworks',
+            state: TodoStatus.BACKLOG,
+            assigned: 'Alice',
+        },
+        {
+            id: uuidv4(),
+            text: 'Create project roadmap',
+            state: TodoStatus.BACKLOG,
+            assigned: 'Bob',
+        },
+        {
+            id: uuidv4(),
+            text: 'Identify key stakeholders',
+            state: TodoStatus.BACKLOG,
+            assigned: 'Charlie',
+        },
+
+        // To Do
         {
             id: uuidv4(),
             text: 'Set up project repository',
-            state: 'pending',
+            state: TodoStatus.TO_DO,
             assigned: 'Alice',
-            location: {
-                lat: 37.7749,
-                lng: -122.4194,
-            },
         },
         {
             id: uuidv4(),
-            text: 'Design user interface',
-            state: 'done',
-            assigned: 'Bob',
-            location: {
-                lat: 34.0522,
-                lng: -118.2437,
-            },
+            text: 'Prepare design mockups',
+            state: TodoStatus.TO_DO,
+            assigned: 'Dana',
         },
+        {
+            id: uuidv4(),
+            text: 'Write project documentation',
+            state: TodoStatus.TO_DO,
+            assigned: 'Eve',
+        },
+
+        // In Progress
         {
             id: uuidv4(),
             text: 'Implement authentication',
-            state: 'pending',
+            state: TodoStatus.IN_PROGRESS,
             assigned: 'Charlie',
-            location: {
-                lat: 40.7128,
-                lng: -74.006,
-            },
         },
+        {
+            id: uuidv4(),
+            text: 'Set up CI/CD pipeline',
+            state: TodoStatus.IN_PROGRESS,
+            assigned: 'Bob',
+        },
+        {
+            id: uuidv4(),
+            text: 'Develop user registration feature',
+            state: TodoStatus.IN_PROGRESS,
+            assigned: 'Dana',
+        },
+
+        // In Review
         {
             id: uuidv4(),
             text: 'Write unit tests',
-            state: 'done',
+            state: TodoStatus.IN_REVIEW,
             assigned: 'Dana',
-            location: {
-                lat: 41.8781,
-                lng: -87.6298,
-            },
         },
         {
             id: uuidv4(),
-            text: 'Deploy to staging environment',
-            state: 'pending',
+            text: 'Code review for authentication',
+            state: TodoStatus.IN_REVIEW,
             assigned: 'Eve',
-            location: {
-                lat: 47.6062,
-                lng: -122.3321,
-            },
+        },
+        {
+            id: uuidv4(),
+            text: 'Review design mockups',
+            state: TodoStatus.IN_REVIEW,
+            assigned: 'Alice',
+        },
+
+        // Blocked
+        {
+            id: uuidv4(),
+            text: 'Deploy to staging environment',
+            state: TodoStatus.BLOCKED,
+            assigned: 'Eve',
+        },
+        {
+            id: uuidv4(),
+            text: 'Resolve API integration issues',
+            state: TodoStatus.BLOCKED,
+            assigned: 'Charlie',
+        },
+        {
+            id: uuidv4(),
+            text: 'Fix bugs from testing',
+            state: TodoStatus.BLOCKED,
+            assigned: 'Bob',
+        },
+
+        // Done
+        {
+            id: uuidv4(),
+            text: 'Design user interface',
+            state: TodoStatus.DONE,
+            assigned: 'Bob',
+        },
+        {
+            id: uuidv4(),
+            text: 'Set up development environment',
+            state: TodoStatus.DONE,
+            assigned: 'Alice',
+        },
+        {
+            id: uuidv4(),
+            text: 'Complete initial project setup',
+            state: TodoStatus.DONE,
+            assigned: 'Dana',
         },
     ],
     tab: 'board',
+    groupBy: 'state',
 };
 
 export function todoReducer(state: TodoState, action: Action) {
     const { type, payload } = action;
     switch (type) {
-        case 'add_todo':
-            return {
-                ...state,
-                todos: [...state.todos, payload],
-            };
-        case 'edit_todo':
-            return {
-                ...state,
-                todos: state.todos.map(todo =>
-                    todo.id === payload.id ? { ...todo, ...payload.todo } : todo,
-                ),
-            };
-        case 'delete_todo':
-            return {
-                ...state,
-                todos: state.todos.filter(todo => todo.id !== payload.id),
-            };
         case 'change_tab':
             return {
                 ...state,
                 tab: payload.tab,
+            };
+        case 'batch_add_todos':
+            return {
+                ...state,
+                todos: [...state.todos, ...payload.todos],
+            };
+        case 'batch_edit_todos':
+            const updatesMap = new Map(payload.todos.map(p => [p.id, p.todo]));
+            return {
+                ...state,
+                todos: state.todos.map(todo =>
+                    updatesMap.has(todo.id) ? { ...todo, ...updatesMap.get(todo.id) } : todo,
+                ),
+            };
+        case 'batch_delete_todos':
+            return {
+                ...state,
+                todos: state.todos.filter(todo => !payload.ids.includes(todo.id)),
+            };
+        case 'set_group_by':
+            return {
+                ...state,
+                groupBy: payload.groupBy,
             };
         default:
             return state;

@@ -7,7 +7,7 @@ import {
     useEffect,
     useMemo,
 } from 'react';
-import { initialTodoState, todoReducer, TodoState } from './todoReducer';
+import { mockInitialTodoState, todoReducer, TodoState } from './todoReducer';
 import { Message, useAssistant } from 'ai/react';
 
 interface TodoAppStateType {
@@ -17,6 +17,7 @@ interface TodoAppStateType {
     panelOpen: boolean;
     setPanelOpen: Dispatch<SetStateAction<boolean>>;
     todoState: TodoState;
+    dispatch: Dispatch<any>;
     error?: any;
     input?: string;
     status?: string;
@@ -29,7 +30,8 @@ const initialContextState: TodoAppStateType = {
     messages: [],
     panelOpen: false,
     setPanelOpen: () => {},
-    todoState: initialTodoState,
+    todoState: mockInitialTodoState,
+    dispatch: () => {},
     error: undefined,
     input: '',
     status: '',
@@ -43,12 +45,11 @@ interface TodoProviderProps {
 }
 
 export const TodoProvider = ({ children }: TodoProviderProps) => {
-    const [todoState, dispatch] = useReducer(todoReducer, initialTodoState);
+    const [todoState, dispatch] = useReducer(todoReducer, mockInitialTodoState);
     const { messages, ...assistantHelpers } = useAssistant({
         api: '/api/assistant',
         body: { state: todoState },
     });
-    console.log('messages', messages);
     const [panelOpen, setPanelOpen] = useState(true);
     const [seenMessages, setSeenMessages] = useState(new Set());
 
@@ -75,6 +76,7 @@ export const TodoProvider = ({ children }: TodoProviderProps) => {
         panelOpen,
         setPanelOpen,
         todoState,
+        dispatch,
     };
 
     return <TodoContext.Provider value={mergedState}>{children}</TodoContext.Provider>;

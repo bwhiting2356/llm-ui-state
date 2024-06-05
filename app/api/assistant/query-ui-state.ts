@@ -7,7 +7,7 @@ const openai = new OpenAI({
 const promptTemplate = `
 <query>{QUERY}</query>
 <state>{STATE}</state>
-Please respond with the slice of JSON application state that is the most relevant, and a summary of how that state is relevant to the query. Please limit your response to less than 300 charcters
+Please respond with the slice of JSON application state that is the most relevant, and a summary of how that state is relevant to the query
 `;
 
 const buildPrompt = (query: string, state: any) => {
