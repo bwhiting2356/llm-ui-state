@@ -19,7 +19,7 @@ This project attempts to address several issues with both traditional and chat i
 
 Check out the deployed app [here](https://llm-ui-state.vercel.app/).
 
-#### Front-end Code Example
+#### Front-end action example
 
 ```typescript
 export const todoReducer: Reducer<TodoState, Action> = (state, action) => {
@@ -35,7 +35,8 @@ export const todoReducer: Reducer<TodoState, Action> = (state, action) => {
     }
 };
 ```
-Back-end tool definition:
+#### Back-end tool definition example 
+(full assistant setup is shown [here](./assistant-definition.md))
 ```
 {
   "name": "batch_add_todos",
