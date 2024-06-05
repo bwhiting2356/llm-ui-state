@@ -11,7 +11,7 @@ This project attempts to address several issues with both traditional and chat i
 * **Text-Heavy Chat Experiences**: Purely chat-based interfaces often become too dense with only text, overwhelming users. Traditional UI interfaces with rich components and interactivity are still valuable and should not be discarded.
 * **Feature Discoverability**: Traditional applications often face challenges such as complex information architecture and poor first time user experience, leading app designers to fall back to clunky tours to explain the app. LLMs can help mitigate these issues by enhancing user guidance and navigation.
 * **Collaborative Interaction with AI**: LLMs can fall short by hallucinating inaccurate data, or by providing responses that are bland and cliché, lacking a creative and fresh point of view. As a result, many users prefer to collaborate with AI rather than outsource all decision-making. This prototype aims to show how this collaboration could work, allowing users to leverage AI assistance in an app while maintaining full control and visibility.
-* **Integration of LLMs and UI Actions**: This prototype leverages the action-reducer state machine paradigm that has been common in web application development, and provides the same actions as functions (tools) to the LLM on the backend.
+* **Integration of LLMs and UI Actions**: This prototype leverages the action-reducer state machine paradigm that has been common in web application development, and makes the same actions available to the LLM as functions (tools) on the backend.
 
 ### Demo
 
@@ -93,8 +93,9 @@ export const todoReducer: Reducer<TodoState, Action> = (state, action) => {
 
 ### Current Issues
 
-* **Function Call Responses**: Currently, the API endpoint responds to the assistant with ‘success’ to all  UI-related function calls, which may not always be accurate. There is a possibility of hallucinated responses from the LLM that could lead to errors, and the llm would not know about those errors.
-* **Performance**: The system can be slow at times. This may improve in the future as LLM inference capabilities advance, potentially allowing for on-device processing.
+* **Function Call Responses**: Currently, the API endpoint responds to the assistant with ‘success’ to all  UI-related function calls, which may not always be accurate. There is a possibility of hallucinated responses from the LLM that could lead to errors, and the LLM would not know about those errors.
+* **Performance**: Responses can be slow at times, especially when the full application state needs to be queried and added to the context. This may improve in the future as LLM inference becomes faster or moves on-device.
 
 ### Future Thinking
-The to-do app is a toy example where LLMs are probably not adding much value. But I can see it being much more helpful for a complex and intimiating application like AutoCAD, ProTools, or Adobe products.
+* The to-do app is a toy example where LLMs are probably not adding much value. But I can see it being much more helpful for a complex and intimiating application like AutoCAD, ProTools, or Adobe products.
+* A multi-modal model could also been given access to a screenshot of the current application state, which could help the LLM guide the user through the interface that they see.
