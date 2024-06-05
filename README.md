@@ -1,43 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with
-[`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+### LLM UI State Management
 
-First, run the development server:
+## Introduction
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This project is a prototype that explores how a large language model (LLM) can interact with the client-side state of an application. This approach aims to integrate the rich interactivity of traditional web interfaces with the intelligent capabilities of LLMs.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Problem Statement
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the
-file.
+This project addresses several key issues:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to
-automatically optimize and load Inter, a custom Google Font.
+* **Text-Heavy Chat Experiences**: Purely chat-based interfaces often become too text-heavy, which can overwhelm users. Traditional web interfaces with rich components and interactivity are still valuable and shouldn’t be discarded.
+* **Challenges in Traditional Apps**: Traditional applications face challenges such as complex information architecture and poor discoverability, especially for first-time users. LLMs can help mitigate these issues by enhancing user guidance and navigation.
+This project addresses several key issues:
 
-## Learn More
+* **Text-Heavy Chat Experiences**: Purely chat-based interfaces often become too text-heavy, which can overwhelm users. Traditional web interfaces with rich components and interactivity are still valuable and shouldn’t be discarded.
+* **Challenges in Traditional Apps**: Traditional applications face challenges such as complex information architecture and poor discoverability, especially for first-time users. LLMs can help mitigate these issues by enhancing user guidance and navigation.
+* **Collaborative Interaction with AI**: LLMs can sometimes hallucinate, providing inaccurate or unexpected responses. Users often prefer to collaborate with AI rather than outsourcing all decision-making. This project aims to facilitate such collaboration, allowing users to leverage AI assistance while maintaining control over their interactions.
+* **Integration of LLMs and UI Actions**: By providing LLMs with custom tools that correspond to frontend actions, we can enable the LLM to dispatch actions that change the state of the UI, thus marrying the benefits of both chat and traditional interfaces.
 
-To learn more about Next.js, take a look at the following resources:
+## Prototype Example:
 
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This prototype is a typical todo app. It uses `useReducer` to manage application state and has actions that can be dispatched. These actions are also provided to the OpenAI assistant.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your
-feedback and contributions are welcome!
+Current Implementation Issues
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the
-[Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
-from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more
-details.
+* **Function Call Responses**: Currently, the system responds with ‘success’ to all function calls, which may not always be accurate. There is a possibility of hallucinated responses from the LLM that could lead to erroneous function executions.
+* **Performance**: The system can be slow at times. This may improve in the future as LLM inference capabilities advance, potentially allowing for on-device processing.
