@@ -10,6 +10,7 @@
         "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|jsx|json|yml|yaml|css|less|scss|ts|tsx|md|gql|graphql|mdx|vue)\""
     },
     "dependencies": {
+        "@hotjar/browser": "^1.0.9",
         "@phosphor-icons/react": "^2.1.5",
         "@radix-ui/react-dialog": "^1.0.5",
         "@radix-ui/react-dropdown-menu": "^2.0.6",
