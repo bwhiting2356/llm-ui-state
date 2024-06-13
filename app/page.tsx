@@ -6,14 +6,12 @@ import { TodoProvider } from './state/context';
 import Hotjar from '@hotjar/browser';
 import { useEffect } from 'react';
 
-const siteId = 5023792;
+const siteId = process.env.NEXT_PUBLIC_HOTJAR_SITE_ID;
 const hotjarVersion = 6;
-
-Hotjar.init(siteId, hotjarVersion);
 
 export default function Home() {
     useEffect(() => {
-        Hotjar.init(process.env.NEXT_PUBLIC_HOTJAR_SITE_ID as any, hotjarVersion);
+        Hotjar.init(siteId as any, hotjarVersion);
       }, []);
     return (
         <main className="flex h-screen flex items-center justify-between">
