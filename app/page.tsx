@@ -12,7 +12,7 @@ const hotjarVersion = 6;
 export default function Home() {
     useEffect(() => {
         Hotjar.init(siteId as any, hotjarVersion);
-      }, []);
+    }, []);
     return (
         <main className="flex h-screen flex items-center justify-between">
             <TodoProvider>

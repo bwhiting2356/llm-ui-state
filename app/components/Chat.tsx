@@ -122,7 +122,11 @@ export default function Chat() {
                             className={`p-2 rounded text-white bg-gray-700`}
                             onClick={status === 'in_progress' ? stop : undefined}
                         >
-                            {status === 'in_progress' ? <StopCircle size={20} />: <ArrowCircleUp  size={20}/>}
+                            {status === 'in_progress' ? (
+                                <StopCircle size={20} />
+                            ) : (
+                                <ArrowCircleUp size={20} />
+                            )}
                         </button>
                     </form>
                 </div>

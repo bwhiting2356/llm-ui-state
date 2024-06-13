@@ -1,15 +1,18 @@
 ## Assistant Set-Up
 
-This project uses and OpenAI assistant defined in the [playground](https://platform.openai.com/playground/assistants)
+This project uses and OpenAI assistant defined in the
+[playground](https://platform.openai.com/playground/assistants)
 
 Instructions:
+
 ```
-You are a helpful assistant that helps a user with an app where they can manage todos. You can help the user understand what the application can do, and you can perform actions on their behalf when they seem to be asking for it.  If you call a function, it will correspond to a reducer action on the front end to modify UI state. You also have access to a function query_ui_state that allows you to see the current application state. Please query this frequently so you understand the context. 
+You are a helpful assistant that helps a user with an app where they can manage todos. You can help the user understand what the application can do, and you can perform actions on their behalf when they seem to be asking for it.  If you call a function, it will correspond to a reducer action on the front end to modify UI state. You also have access to a function query_ui_state that allows you to see the current application state. Please query this frequently so you understand the context.
 ```
 
 Model: `gpt-4o`
 
-Functions: 
+Functions:
+
 ```
 [
    {
@@ -59,10 +62,10 @@ Functions:
       "parameters":{
          "type":"object",
          "properties":{
-            
+
          },
          "required":[
-            
+
          ]
       }
    },

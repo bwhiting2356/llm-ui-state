@@ -20,7 +20,6 @@ export const TodoCard = ({ todo }: TodoCardProps) => {
         dispatch({ type: 'batch_delete_todos', payload: { ids: [todo.id] } });
     };
 
-
     const onEditTodo = (newTodo: Todo) => {
         dispatch({
             type: 'batch_edit_todos',
